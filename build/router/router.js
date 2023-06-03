@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const HtmlApiControllers_1 = require("@/controllers/html/HtmlApiControllers");
+const NoticiasPostControllers_1 = __importDefault(require("@/controllers/news/NoticiasPostControllers"));
+const NoticiasGetControllers_1 = __importDefault(require("@/controllers/news/NoticiasGetControllers"));
+const RegisterApiControllers_1 = __importDefault(require("@/controllers/auth/RegisterApiControllers"));
+const LoginApiControllers_1 = __importDefault(require("@/controllers/auth/LoginApiControllers"));
+const check_auth_1 = require("@/middlewares/check-auth");
+const router = (0, express_1.Router)();
+router.post("/api/user/register", RegisterApiControllers_1.default);
+router.post("/api/user/login", LoginApiControllers_1.default);
+router.post("/api/news/v1/post", NoticiasPostControllers_1.default);
+router.get("/api/news/v1/list", check_auth_1.authentication, NoticiasGetControllers_1.default);
+router.get("/api/docs", HtmlApiControllers_1.DocsApiControllers);
+router.get("/api/privacidade", HtmlApiControllers_1.PrivacidadeApiControllers);
+router.get("/api/suporte", HtmlApiControllers_1.SuporteApiControllers);
+exports.default = router;
